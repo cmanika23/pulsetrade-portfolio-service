@@ -1,9 +1,6 @@
 package com.pulsetrade.portfolio_service.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,9 +11,10 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Portfolio {
-
-    private Long userId;
+    private Long id;
+    private UUID userId;
     private String name;
 
     private String type; // e.g., "Taxable", "401k", "Roth IRA", etc.
