@@ -1,5 +1,7 @@
 package com.pulsetrade.portfolio_service.api.controller;
 
+import com.pulsetrade.portfolio_service.api.dto.PortfolioRequest;
+import com.pulsetrade.portfolio_service.api.dto.PortfolioResponse;
 import com.pulsetrade.portfolio_service.application.service.PortfolioService;
 import com.pulsetrade.portfolio_service.domain.model.Portfolio;
 import lombok.RequiredArgsConstructor;
@@ -19,17 +21,17 @@ public class PortfolioController {
     private final PortfolioService portfolioService;
 
     @GetMapping("")
-    public ResponseEntity<List<Portfolio>> getPortfolios(Authentication auth){
+    public ResponseEntity<List<PortfolioResponse>> getPortfolios(Authentication auth){
         UUID userId = (UUID) auth.getPrincipal();
-        List<Portfolio> portfolios = portfolioService.getPortfoliosByUserId(userId);
+        List<PortfolioResponse> portfolios = portfolioService.getPortfoliosByUserId(userId);
         return ResponseEntity.ok(portfolios);
     }
 
     @PostMapping
-    public ResponseEntity<Portfolio> createPortfolio(@RequestBody Portfolio portfolio, Authentication auth){
+    public ResponseEntity<Portfolio> createPortfolio(@RequestBody PortfolioRequest request, Authentication auth){
         UUID userId = (UUID) auth.getPrincipal();
-        portfolio.setUserId(userId);
-        Portfolio portfolioSaved = portfolioService.createPortfolio(portfolio);
+        //request.setUserId(userId);
+        Portfolio portfolioSaved = portfolioService.createPortfolio(request, userId);
         return ResponseEntity.ok(portfolioSaved);
     }
 

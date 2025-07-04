@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface SpringPortfolioJpaRepository extends JpaRepository<PortfolioEntity, Long> {
     List<PortfolioEntity> findByUserId(UUID userId);
+
 }
