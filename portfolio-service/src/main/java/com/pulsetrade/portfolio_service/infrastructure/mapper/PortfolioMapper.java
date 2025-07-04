@@ -1,5 +1,7 @@
 package com.pulsetrade.portfolio_service.infrastructure.mapper;
 
+import com.pulsetrade.portfolio_service.api.dto.PortfolioRequest;
+import com.pulsetrade.portfolio_service.api.dto.PortfolioResponse;
 import com.pulsetrade.portfolio_service.domain.model.Portfolio;
 import com.pulsetrade.portfolio_service.infrastructure.entity.PortfolioEntity;
 import org.springframework.stereotype.Component;
@@ -38,6 +40,21 @@ public class PortfolioMapper {
                 .advisor(domain.getAdvisor())
                 .createdAt(domain.getCreatedAt())
                 .updatedAt(domain.getUpdatedAt())
+                .build();
+    }
+
+    public PortfolioResponse domainToDTO(Portfolio portfolio){
+        return PortfolioResponse.builder()
+                .id(portfolio.getId())
+                .userId(portfolio.getUserId())
+                .name(portfolio.getName())
+                .type(portfolio.getType())
+                .currency(portfolio.getCurrency())
+                .totalValue(portfolio.getTotalValue())
+                .cashBalance(portfolio.getCashBalance())
+                .riskProfile(portfolio.getRiskProfile())
+                .strategy(portfolio.getStrategy())
+                .advisor(portfolio.getAdvisor())
                 .build();
     }
 }

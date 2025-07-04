@@ -8,4 +8,5 @@ import java.util.UUID;
 public interface IPortfolioRepository {
     List<Portfolio> findByUserId(UUID userId);
     Portfolio save(Portfolio portfolio);
+    Portfolio findByPortfolioId(Long id);
 }

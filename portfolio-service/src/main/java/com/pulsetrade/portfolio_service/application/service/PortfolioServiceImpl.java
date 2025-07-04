@@ -4,6 +4,7 @@ import com.pulsetrade.portfolio_service.api.dto.PortfolioRequest;
 import com.pulsetrade.portfolio_service.api.dto.PortfolioResponse;
 import com.pulsetrade.portfolio_service.domain.model.Portfolio;
 import com.pulsetrade.portfolio_service.domain.repository.IPortfolioRepository;
+import com.pulsetrade.portfolio_service.infrastructure.mapper.PortfolioMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,27 +18,14 @@ import java.util.stream.Collectors;
 public class PortfolioServiceImpl implements PortfolioService{
 
     private final IPortfolioRepository portfolioRepo;
+    private final PortfolioMapper mapper;
 
     @Override
     public List<PortfolioResponse> getPortfoliosByUserId(UUID userID) {
 
         List<Portfolio> portfolios = portfolioRepo.findByUserId(userID);
 
-        return portfolios.stream().map(portfolio -> {
-            PortfolioResponse response = PortfolioResponse.builder()
-                    .id(portfolio.getId())
-                    .userId(portfolio.getUserId())
-                    .name(portfolio.getName())
-                    .type(portfolio.getType())
-                    .currency(portfolio.getCurrency())
-                    .totalValue(portfolio.getTotalValue())
-                    .cashBalance(portfolio.getCashBalance())
-                    .riskProfile(portfolio.getRiskProfile())
-                    .strategy(portfolio.getStrategy())
-                    .advisor(portfolio.getAdvisor())
-                    .build();
-            return response;
-        }).toList();
+        return portfolios.stream().map(mapper::domainToDTO).toList();
     }
 
     @Override
